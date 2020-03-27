@@ -30,7 +30,11 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "user_profile")
 @Component
-@JsonPropertyOrder({"id", "created", "updated", "displayName", "href"})
+@JsonIgnoreProperties(
+    value = {"id", "created", "updated", "href"},
+    allowGetters = true,
+    ignoreUnknown = true
+)
 public class User implements FlatUser {
 
   private static EntityLinks entityLinks;
@@ -61,6 +65,7 @@ public class User implements FlatUser {
 
   @JsonIgnore
   @NonNull
+  @Column(nullable = false, updatable = false, unique = true)
   private String oauthKey;
 
   @Override
